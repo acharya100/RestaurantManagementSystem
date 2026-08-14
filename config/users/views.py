@@ -22,14 +22,20 @@ class UserListAPIView(APIView):
         if serializer.is_valid():
             serializer.save()
 
-            return Response(serializer.data)
-        return Response(serializer.errors)
+            return Response(serializer.data,status=201)
+        return Response(serializer.errors, status=400)
 
 
 class UserDetailAPIView(APIView):
     """
     custom user views containing userdetailapiview
     """
+    def get(self, request, pk):
+        user = get_object_or_404(User, id=pk)
+        serializer = UserSerializer(user)
+
+        return Response(serializer.data)
+
     def put(self, request, pk):
         user = get_object_or_404(User, id =pk)
         serializer = UserSerializer(user, data = request.data)
@@ -38,7 +44,7 @@ class UserDetailAPIView(APIView):
             serializer.save()
 
             return Response(serializer.data)
-        return Response(serializer.errors)
+        return Response(serializer.errors, status=400)
 
     def delete(self, request, pk):
         user = get_object_or_404(User, id=pk)

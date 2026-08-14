@@ -22,14 +22,20 @@ class RestaurantListAPIView(APIView):
         if serializer.is_valid():
             serializer.save()
 
-            return Response(serializer.data)
-        return Response(serializer.errors)
+            return Response(serializer.data, status=201)
+        return Response(serializer.errors, status=400)
 
 
 class RestaurantDetailAPIView(APIView):
     """
     custom restaurant views containing userdetailapiview
     """
+    def get(self, request, pk):
+        restaurant = get_object_or_404(Restaurant, id=pk)
+        serializer = RestaurantSerializer(restaurant, data=request.data)
+
+        return Response(serializer.data)
+
     def put(self, request, pk):
         restaurant = get_object_or_404(Restaurant, id=pk)
         serializer = RestaurantSerializer(restaurant, data = request.data)
@@ -38,7 +44,7 @@ class RestaurantDetailAPIView(APIView):
             serializer.save()
 
             return Response(serializer.data)
-        return Response(serializer.errors)
+        return Response(serializer.errors, status=400)
 
     def delete(self, request, pk):
         restaurant = get_object_or_404(Restaurant, id=pk)
