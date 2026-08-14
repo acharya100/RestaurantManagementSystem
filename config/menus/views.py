@@ -2,22 +2,22 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 
-from reviews.models import Review
-from reviews.serializers import ReviewSerializer
+from menus.models import Menu
+from menus.serializers import MenuSerializer
 
 
-class ReviewListAPIView(APIView):
+class MenuListAPIView(APIView):
     """
-    custom review views for reviewlistapiview
+    custom menu views containing userlistapiview
     """
     def get(self, request):
-        reviews = Review.objects.all()
-        serializer = ReviewSerializer(reviews, many = True)
+        menus = Menu.objects.all()
+        serializer = MenuSerializer(menus, many = True)
 
         return Response(serializer.data)
 
     def post(self, request):
-        serializer = ReviewSerializer(data= request.data)
+        serializer = MenuSerializer(data=request.data)
 
         if serializer.is_valid():
             serializer.save()
@@ -25,14 +25,13 @@ class ReviewListAPIView(APIView):
             return Response(serializer.data)
         return Response(serializer.errors)
 
-
-class ReviewDetailAPIView(APIView):
+class MenuDetailAPIView(APIView):
     """
-    custom review views for reviewdetailapiview
+    custom menu views containing userdetailapiview
     """
     def put(self, request, pk):
-        review = get_object_or_404(Review, id=pk)
-        serializer = ReviewSerializer(review, data = request.data)
+        menu = get_object_or_404(Menu, id=pk)
+        serializer = MenuSerializer(menu, data=request.data)
 
         if serializer.is_valid():
             serializer.save()
@@ -41,8 +40,7 @@ class ReviewDetailAPIView(APIView):
         return Response(serializer.errors)
 
     def delete(self, request, pk):
-        review = get_object_or_404(Review, id=pk)
-        review.delete()
+        menu = get_object_or_404(Menu, id=pk)
+        menu.delete()
 
         return Response(status=204)
-    

@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     'corsheaders',
 
     # local apps
-    'menu.apps.MenuConfig',
+    'menus.apps.MenusConfig',
     'orders.apps.OrdersConfig',
     'reservations.apps.ReservationsConfig',
     'restaurants.apps.RestaurantsConfig',

@@ -13,11 +13,14 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Review',
+            name='Menu',
             fields=[
                 ('id', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),
-                ('rating', models.FloatField()),
-                ('comment', models.TextField(blank=True)),
+                ('name', models.CharField(max_length=200)),
+                ('description', models.TextField(blank=True)),
+                ('image', models.ImageField(blank=True, null=True, upload_to='menus')),
+                ('is_available', models.BooleanField(default=True)),
+                ('price', models.DecimalField(decimal_places=2, max_digits=11)),
                 ('created_at', models.DateTimeField(auto_now=True)),
                 ('updated_at', models.DateTimeField(auto_now_add=True)),
             ],

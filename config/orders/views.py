@@ -1,18 +1,23 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from django.shortcuts import get_object_or_404
 
 from orders.models import Order, OrderItem
 from orders.serializers import OrderSerializer, OrderItemSerializer
 
+
 class OrderListAPIView(APIView):
+    """
+    custom order views for orderlistapiview
+    """
     def get(self, request):
         orders = Order.objects.all()
-        serilaizer = OrderSerializer(orders, many = True)
+        serializer = OrderSerializer(orders, many = True)
 
-        return Response(request.data)
+        return Response(serializer.data)
 
     def post(self, request):
-        serializer = OrderSerializer(data = request.data)
+        serializer = OrderSerializer(data=request.data)
 
         if serializer.is_valid():
             serializer.save()
@@ -22,9 +27,12 @@ class OrderListAPIView(APIView):
 
 
 class OrderDetailAPIView(APIView):
+    """
+    custom order views for orderdetailapiview
+    """
     def put(self, request, pk):
-        order = Order.objects.get(id = pk)
-        serializer = OrderSerializer(order, data=request.data)
+        order = get_object_or_404(Order, id=pk)
+        serializer = OrderSerializer(order, data = request.data)
 
         if serializer.is_valid():
             serializer.save()
@@ -33,25 +41,24 @@ class OrderDetailAPIView(APIView):
         return Response(serializer.errors)
 
     def delete(self, request, pk):
-        order = Order.objects.get(id = pk)
-        order.save()
+        order = get_object_or_404(Order, id=pk)
+        order.delete()
 
-        return Response(
-            {
-                'message': 'order deleted successfully'
-            }
-        )
+        return Response(status = 204)
 
 
 class OrderItemListAPIView(APIView):
+    """
+    custom order item views for orderlistapiview
+    """
     def get(self, request):
-        order_items = OrderItem.objects.all()
-        serializer = OrderSerializer(order_items, many = True)
+        orderitems = Order.objects.all()
+        serializer = OrderSerializer(orderitems, many = True)
 
         return Response(serializer.data)
 
     def post(self, request):
-        serializer = OrderItemSerializer(data = request.data)
+        serializer = OrderItemSerializer(data=request.data)
 
         if serializer.is_valid():
             serializer.save()
@@ -60,9 +67,12 @@ class OrderItemListAPIView(APIView):
         return Response(serializer.errors)
 
 class OrderItemDetailAPIView(APIView):
+    """
+    custom order item views for orderdetailapiview
+    """
     def put(self, request, pk):
-        order_item = OrderItem.objects.get(id = pk)
-        serializer = OrderItemSerializer(order_item, data=request.data)
+        orderitem = get_object_or_404(Order, id=pk)
+        serializer = OrderItemSerializer(orderitem, data = request.data)
 
         if serializer.is_valid():
             serializer.save()
@@ -71,11 +81,7 @@ class OrderItemDetailAPIView(APIView):
         return Response(serializer.errors)
 
     def delete(self, request, pk):
-        order_item = OrderItem.objects.get(id=pk)
-        order_item.save()
+        orderitem = get_object_or_404(OrderItem, id=pk)
+        orderitem.delete()
 
-        return Response(
-            {
-                'message': 'Order item deleted successfully'
-            }
-        )
+        return Response(status = 204)

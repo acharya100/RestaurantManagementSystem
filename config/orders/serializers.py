@@ -9,10 +9,9 @@ class OrderSerializer(serializers.ModelSerializer):
         model = Order
         fields = [
             'id', 'customer', 'restaurant',
-            'description', 'status', 'total_price',
-            'created_at', 'updated_at'
+            'status', 'total_price',
+            'description', 'created_at', 'updated_at'
         ]
-
 
 class OrderItemSerializer(serializers.ModelSerializer):
     """
@@ -21,7 +20,6 @@ class OrderItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrderItem
         fields = [
-            'id', 'order', 'menu',
-            'unit_price', 'quantity',
-            'created_at', 'updated_at'
+            'id', 'order', 'menu', 'quantity',
+            'unit_price', 'created_at', 'updated_at'
         ]

@@ -6,7 +6,7 @@ This project is a Django-based restaurant management system. It includes separat
 What this project contains
 
 'config/' — Django project settings, main URLs, ASGI/WGSI files.
-'menu/' — menu items, serializers, views and menu-related API logic.
+'menus/' — menu items, serializers, views and menu-related API logic.
 'orders/' — order models, serializers and order handling.
 'reservations/' — restaurant reservation functionality.
 'restaurants/' — restaurant data, open/close status and restaurant APIs.

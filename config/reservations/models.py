@@ -3,14 +3,16 @@ from django.db import models
 from users.models import User
 from restaurants.models import Restaurant
 
+
 class Reservation(models.Model):
     """
     custom reservation models
     """
-    class Status(models.TextChoices):
-        PENDING = 'PENDING', 'pending'
-        RESERVED = 'RESERVED', 'reserved'
-        CANCELLED = 'CANCELLED', 'cancelled'
+    class State(models.TextChoices):
+        PENDING = 'PENDING', 'Pending'
+        BOOKED = 'BOOKED', 'Booked'
+        OPEN = 'OPEN', 'Open'
+        CANCELLED = 'CANCELLED', 'Cancelled'
 
     id = models.UUIDField(
         primary_key=True,
@@ -25,19 +27,20 @@ class Reservation(models.Model):
         Restaurant, on_delete=models.CASCADE,
         related_name='reservations'
     )
-    status = models.CharField(
+    table_number = models.PositiveIntegerField(default=1)
+    number_of_guests = models.PositiveBigIntegerField(default=1)
+    table_name = models.CharField(max_length=150, blank = True)
+    state = models.CharField(
         max_length=20,
-        choices=Status.choices,
-        default=Status.PENDING
+        choices = State.choices,
+        default = State.OPEN
     )
-    table_number = models.PositiveIntegerField(default = 1)
-    number_of_guests = models.PositiveIntegerField(default = 1)
     reservation_date = models.DateField()
     reservation_time = models.TimeField()
-    special_request = models.TextField(blank = True)
+    special_request = models.CharField(max_length=500, blank=True)
 
-    created_at = models.DateTimeField(auto_now_add = True)
-    updated_at = models.DateTimeField(auto_now = True)
+    created_at = models.DateTimeField(auto_now=True)
+    updated_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"Reservation{self.id} - Table {self.table_number}"
+        return f"Table Number {self.table_number} for {self.customer.name}"
