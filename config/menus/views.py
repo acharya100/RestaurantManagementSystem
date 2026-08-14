@@ -22,13 +22,19 @@ class MenuListAPIView(APIView):
         if serializer.is_valid():
             serializer.save()
 
-            return Response(serializer.data)
-        return Response(serializer.errors)
+            return Response(serializer.data, status=201)
+        return Response(serializer.errors, status=400)
 
 class MenuDetailAPIView(APIView):
     """
     custom menu views containing userdetailapiview
     """
+    def get(self, request, pk):
+        menu = get_object_or_404(Menu, id=pk)
+        serializer = MenuSerializer(menu, data=request.data)
+
+        return Response(serializer.data)
+
     def put(self, request, pk):
         menu = get_object_or_404(Menu, id=pk)
         serializer = MenuSerializer(menu, data=request.data)
@@ -37,7 +43,7 @@ class MenuDetailAPIView(APIView):
             serializer.save()
 
             return Response(serializer.data)
-        return Response(serializer.errors)
+        return Response(serializer.errors, status=400)
 
     def delete(self, request, pk):
         menu = get_object_or_404(Menu, id=pk)

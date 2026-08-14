@@ -32,13 +32,13 @@ class RestaurantDetailAPIView(APIView):
     """
     def get(self, request, pk):
         restaurant = get_object_or_404(Restaurant, id=pk)
-        serializer = RestaurantSerializer(restaurant, data=request.data)
+        serializer = RestaurantSerializer(restaurant)
 
         return Response(serializer.data)
 
     def put(self, request, pk):
         restaurant = get_object_or_404(Restaurant, id=pk)
-        serializer = RestaurantSerializer(restaurant, data = request.data)
+        serializer = RestaurantSerializer(restaurant, data=request.data)
 
         if serializer.is_valid():
             serializer.save()
