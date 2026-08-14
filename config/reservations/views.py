@@ -22,14 +22,21 @@ class ReservationListAPIView(APIView):
         if serializer.is_valid():
             serializer.save()
 
-            return Response(serializer.data)
-        return Response(serializer.errors)
+            return Response(serializer.data, status = 201)
+        return Response(serializer.errors, status = 400)
 
 
 class ReservationDetailAPIView(APIView):
     """
     custom reservation views for reservationdetailapiview
     """
+    def get(self,request,pk):
+        reservation = get_object_or_404(Reservation, id=pk)
+        serializer = ReservationSerializer(reservation)
+
+        return Response(serializer.data)
+
+
     def put(self, request, pk):
         reservation = get_object_or_404(Reservation, id=pk)
         serializer = ReservationSerializer(reservation, data = request.data)
@@ -38,7 +45,7 @@ class ReservationDetailAPIView(APIView):
             serializer.save()
 
             return Response(serializer.data)
-        return Response(serializer.errors)
+        return Response(serializer.errors, status = 400)
 
     def delete(self, request,pk):
         reservation = get_object_or_404(Reservation, id=pk)

@@ -31,7 +31,7 @@ class MenuDetailAPIView(APIView):
     """
     def get(self, request, pk):
         menu = get_object_or_404(Menu, id=pk)
-        serializer = MenuSerializer(menu, data=request.data)
+        serializer = MenuSerializer(menu)
 
         return Response(serializer.data)
 
