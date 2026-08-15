@@ -61,7 +61,7 @@ class OrderItem(models.Model):
         Menu, on_delete=models.CASCADE,
         related_name='orderitems'
     )
-    quantity = models.PositiveBigIntegerField(default=1)
+    quantity = models.PositiveBigIntegerField()
     unit_price = models.DecimalField(max_digits=10, decimal_places=2)
 
     created_at = models.DateTimeField(auto_now=True)

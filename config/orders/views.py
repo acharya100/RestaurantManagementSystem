@@ -59,8 +59,8 @@ class OrderItemListAPIView(APIView):
     custom order item views for orderlistapiview
     """
     def get(self, request):
-        orderitems = Order.objects.all()
-        serializer = OrderSerializer(orderitems, many = True)
+        orderitems = OrderItem.objects.all()
+        serializer = OrderItemSerializer(orderitems, many = True)
 
         return Response(serializer.data)
 
@@ -85,7 +85,7 @@ class OrderItemDetailAPIView(APIView):
 
 
     def put(self, request, pk):
-        orderitem = get_object_or_404(Order, id=pk)
+        orderitem = get_object_or_404(OrderItem, id=pk)
         serializer = OrderItemSerializer(orderitem, data = request.data)
 
         if serializer.is_valid():
