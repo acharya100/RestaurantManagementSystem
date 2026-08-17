@@ -1,7 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
-
+from rest_framework import status
 from orders.models import Order, OrderItem
 from orders.serializers import OrderSerializer, OrderItemSerializer
 
@@ -22,8 +22,8 @@ class OrderListAPIView(APIView):
         if serializer.is_valid():
             serializer.save()
 
-            return Response(serializer.data, status=201)
-        return Response(serializer.errors, status=400)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class OrderDetailAPIView(APIView):
@@ -45,13 +45,13 @@ class OrderDetailAPIView(APIView):
             serializer.save()
 
             return Response(serializer.data)
-        return Response(serializer.errors, status=400)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk):
         order = get_object_or_404(Order, id=pk)
         order.delete()
 
-        return Response(status = 204)
+        return Response(status = status.HTTP_204_NO_CONTENT)
 
 
 class OrderItemListAPIView(APIView):
@@ -70,8 +70,8 @@ class OrderItemListAPIView(APIView):
         if serializer.is_valid():
             serializer.save()
 
-            return Response(serializer.data, status=201)
-        return Response(serializer.errors, status=400)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class OrderItemDetailAPIView(APIView):
     """
@@ -92,10 +92,10 @@ class OrderItemDetailAPIView(APIView):
             serializer.save()
 
             return Response(serializer.data)
-        return Response(serializer.errors, status=400)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk):
         orderitem = get_object_or_404(OrderItem, id=pk)
         orderitem.delete()
 
-        return Response(status = 204)
+        return Response(status = status.HTTP_204_NO_CONTENT)

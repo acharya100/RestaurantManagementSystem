@@ -12,4 +12,4 @@ What this project contains
 'restaurants/' — restaurant data, open/close status and restaurant APIs.
 'reviews/' — customer reviews and review APIs.
 'users/' — user profiles, authentication-related models and serializers.
-ven/` — local Python virtual environment used for dependencies.
+ven/' — local Python virtual environment used for dependencies.

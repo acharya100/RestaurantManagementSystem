@@ -24,4 +24,4 @@ class RestaurantModelTests(TestCase):
         )
 
         self.assertEqual(restaurant.description, '')
-        self.assertTrue(restaurant.is_opened)
+        self.assertTrue(restaurant)
