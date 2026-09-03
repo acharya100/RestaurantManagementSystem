@@ -6,6 +6,7 @@ from rest_framework import status
 from users.models import User
 from users.serializers import UserSerializer, UserRegistrationSerializer
 
+
 class UserRegisterAPIView(APIView):
     def post(self, request):
         serializer = UserRegistrationSerializer(data=request.data)
@@ -25,7 +26,7 @@ class UserListAPIView(APIView):
         users = User.objects.all()
         serializer = UserSerializer(users, many = True)
 
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request):
         serializer = UserSerializer(data=request.data)
@@ -45,7 +46,7 @@ class UserDetailAPIView(APIView):
         user = get_object_or_404(User, id=pk)
         serializer = UserSerializer(user)
 
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     def put(self, request, pk):
         user = get_object_or_404(User, id =pk)
@@ -54,7 +55,7 @@ class UserDetailAPIView(APIView):
         if serializer.is_valid():
             serializer.save()
 
-            return Response(serializer.data)
+            return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk):

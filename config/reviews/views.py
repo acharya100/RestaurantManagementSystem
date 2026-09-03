@@ -14,7 +14,7 @@ class ReviewListAPIView(APIView):
         reviews = Review.objects.all()
         serializer = ReviewSerializer(reviews, many = True)
 
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def post(self, request):
         serializer = ReviewSerializer(data= request.data)
@@ -34,7 +34,7 @@ class ReviewDetailAPIView(APIView):
         review = get_object_or_404(Review, id=pk)
         serializer = ReviewSerializer(review)
 
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
     def put(self, request, pk):

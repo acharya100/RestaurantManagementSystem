@@ -14,7 +14,7 @@ class ReservationListAPIView(APIView):
         reservations = Reservation.objects.all()
         serializer = ReservationSerializer(reservations, many = True)
 
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def post(self, request):
         serializer = ReservationSerializer(data= request.data)
@@ -34,7 +34,7 @@ class ReservationDetailAPIView(APIView):
         reservation = get_object_or_404(Reservation, id=pk)
         serializer = ReservationSerializer(reservation)
 
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
     def put(self, request, pk):

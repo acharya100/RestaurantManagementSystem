@@ -14,7 +14,7 @@ class RestaurantListAPIView(APIView):
         restaurants = Restaurant.objects.all()
         serializer = RestaurantSerializer(restaurants, many = True)
 
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def post(self, request):
         serializer = RestaurantSerializer(data = request.data)
@@ -34,7 +34,7 @@ class RestaurantDetailAPIView(APIView):
         restaurant = get_object_or_404(Restaurant, id=pk)
         serializer = RestaurantSerializer(restaurant)
 
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def put(self, request, pk):
         restaurant = get_object_or_404(Restaurant, id=pk)

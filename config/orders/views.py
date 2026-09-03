@@ -14,7 +14,7 @@ class OrderListAPIView(APIView):
         orders = Order.objects.all()
         serializer = OrderSerializer(orders, many = True)
 
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def post(self, request):
         serializer = OrderSerializer(data=request.data)
@@ -34,7 +34,7 @@ class OrderDetailAPIView(APIView):
         order = get_object_or_404(Order, id=pk)
         serializer = OrderSerializer(order)
 
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     
     def put(self, request, pk):
@@ -62,7 +62,7 @@ class OrderItemListAPIView(APIView):
         orderitems = OrderItem.objects.all()
         serializer = OrderItemSerializer(orderitems, many = True)
 
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def post(self, request):
         serializer = OrderItemSerializer(data=request.data)
@@ -81,7 +81,7 @@ class OrderItemDetailAPIView(APIView):
         orderitem = get_object_or_404(OrderItem, id=pk)
         serializer = OrderItemSerializer(orderitem)
 
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
     def put(self, request, pk):

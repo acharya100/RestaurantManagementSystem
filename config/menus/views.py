@@ -14,7 +14,7 @@ class MenuListAPIView(APIView):
         menus = Menu.objects.all()
         serializer = MenuSerializer(menus, many = True)
 
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def post(self, request):
         serializer = MenuSerializer(data=request.data)
@@ -33,7 +33,7 @@ class MenuDetailAPIView(APIView):
         menu = get_object_or_404(Menu, id=pk)
         serializer = MenuSerializer(menu)
 
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def put(self, request, pk):
         menu = get_object_or_404(Menu, id=pk)
